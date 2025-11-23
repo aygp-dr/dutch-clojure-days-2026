@@ -1,0 +1,131 @@
+#+TITLE: Dutch Clojure Days 2026 - Conference Materials
+#+AUTHOR: Jason Walsh
+#+EMAIL: j@wal.sh
+#+DATE: 2026-05-09
+#+STARTUP: overview
+#+PROPERTY: header-args:clojure :mkdirp t
+#+PROPERTY: header-args:python :mkdirp t
+
+[[https://img.shields.io/badge/License-MIT-blue.svg]] [[https://img.shields.io/badge/Clojure-1.12-green.svg]] [[https://img.shields.io/badge/Org--Mode-Literate-purple.svg]] [[https://img.shields.io/badge/Conference-DCD_2026-orange.svg]]
+
+* Project Overview
+
+Materials for Dutch Clojure Days 2026 conference submission and presentation.
+
+** Conference Information
+
+| Item         | Details                                    |
+|--------------+--------------------------------------------|
+| *Event*      | Dutch Clojure Days 2026                    |
+| *Date*       | Saturday, May 9th, 2026                    |
+| *Location*   | City of Wesopa, Weesp (Amsterdam)          |
+| *Format*     | Full day, in-person                        |
+| *Tickets*    | Free (limited to ~50 attendees)            |
+| *CFP Opens*  | November 1, 2025                           |
+| *CFP Closes* | January 15, 2026                           |
+| *Submit*     | https://sessionize.com/dutch-clojure-days-2026/ |
+
+* Repository Structure
+
+- =cfp/= :: Call for Papers proposals (5 proposals)
+- =presentations/= :: Slides and demo materials
+- =research/= :: Background research and references  
+- =code/= :: Tangled code examples and live demos
+- =docs/= :: Conference documentation and timelines
+
+* CFP Proposals Status
+
+| # | Title                              | Status      | Format | Priority |
+|---+------------------------------------+-------------+--------+----------|
+| 1 | Literate Programming in Production | Draft       | 35 min | High     |
+| 2 | Visualizing with Mermaid           | Draft       | 35 min | High     |
+| 3 | Polyglot Data Pipelines            | Outline     | 35 min | Medium   |
+| 4 | Reproducible Data Science          | Outline     | 35 min | Medium   |
+| 5 | HTMX Dashboards                    | Draft       | 7 min  | Medium   |
+
+* Quick Links
+
+- [[file:cfp/README.org][CFP Overview and Tracking]]
+- [[file:docs/timeline.org][Project Timeline]]
+- [[file:docs/submission-checklist.org][Submission Checklist]]
+- [[file:research/dcd-history.org][Previous DCD Analysis]]
+
+* Tooling
+
+This project uses:
+- *VCS*: Jujutsu (jj) with git colocate
+- *Repo Management*: ghq
+- *GitHub*: gh CLI
+- *Editor*: Emacs with org-mode, org-babel
+- *Languages*: Clojure (via babashka), Python
+- *Diagrams*: Mermaid
+
+* Development Workflow
+
+** Proposal Development
+
+#+begin_src bash
+# Start new proposal
+jj new -m "WIP: New CFP proposal"
+emacs cfp/proposals/01-literate-programming.org
+
+# Tangle code examples
+C-c C-v t   # In Emacs: org-babel-tangle
+
+# Generate diagrams  
+C-c C-c     # In Emacs: on mermaid src block
+
+# Commit when ready
+jj describe -m "Complete proposal draft"
+#+end_src
+
+** Review Process
+
+#+begin_src bash
+# Create review branch
+jj branch create cfp/review-proposal-1
+
+# Push for feedback
+jj git push --branch cfp/review-proposal-1
+gh pr create --title "Review: Proposal 1"
+
+# Iterate based on feedback
+jj new -m "Address review comments"
+#+end_src
+
+* Tasks [0/15]
+
+** CFP Development [0/5]
+   - [ ] Complete Proposal 1: Literate Programming
+   - [ ] Complete Proposal 2: Mermaid Visualization
+   - [ ] Complete Proposal 3: Polyglot Pipelines
+   - [ ] Complete Proposal 4: Reproducible Data Science
+   - [ ] Complete Proposal 5: HTMX Dashboards
+
+** Code Examples [0/5]
+   - [ ] Tangle all code examples
+   - [ ] Test babashka scripts
+   - [ ] Test Python integration
+   - [ ] Verify all examples run
+   - [ ] Create demo data
+
+** Diagrams [0/3]
+   - [ ] Generate all Mermaid diagrams
+   - [ ] Verify diagram accuracy
+   - [ ] Export to multiple formats
+
+** Submission [0/2]
+   - [ ] Complete Sessionize profile
+   - [ ] Submit before Jan 15, 2026
+
+* Notes
+
+Use ~C-c C-c~ on checkboxes to update completion percentages.
+
+#+begin_src emacs-lisp
+;; Useful Emacs commands for this project
+;; C-c C-v t   - Tangle current file
+;; C-c C-v T   - Tangle all files
+;; C-c C-v C-b - Execute all code blocks
+;; C-c C-e h o - Export to HTML and open
+#+end_src

@@ -1,0 +1,24 @@
+#+TITLE: Development Tools
+
+* Jujutsu (jj)
+Jujutsu is a Git-compatible DVCS.
+
+- *Initialize*: ~jj git init --colocate~
+- *New Change*: ~jj new~ (starts a new anonymous branch/commit)
+- *Describe*: ~jj describe -m "message"~ (commit message)
+- *Push*: ~jj git push~
+- *Log*: ~jj log~
+
+* GitHub CLI (gh)
+Command line tool for GitHub.
+
+- *Create Repo*: ~gh repo create~
+- *PRs*: ~gh pr create~, ~gh pr list~
+- *Issues*: ~gh issue list~
+
+* ghq
+Remote repository clone manager.
+
+- *Root*: ~ghq root~ (shows where repos are stored)
+- *Get*: ~ghq get <url>~ (clones a repo)
+- *List*: ~ghq list~

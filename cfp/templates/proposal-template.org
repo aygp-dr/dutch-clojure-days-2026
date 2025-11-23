@@ -1,0 +1,182 @@
+#+TITLE: [Proposal Title]
+#+AUTHOR: Jason Walsh
+#+EMAIL: j@wal.sh
+#+DATE: {{{time(%Y-%m-%d)}}}
+#+STARTUP: overview indent
+#+PROPERTY: header-args:clojure :tangle ../../code/examples/PROPOSAL_NAME.clj :mkdirp t
+#+PROPERTY: header-args:python :tangle ../../code/examples/PROPOSAL_NAME.py :mkdirp t
+
+* Metadata
+
+| Field           | Value                       |
+|-----------------+-----------------------------|
+| Conference      | Dutch Clojure Days 2026     |
+| Format          | [Lightning 7min / Full 35min] |
+| Target Audience | [Description]               |
+| Status          | [Draft/Review/Submitted]    |
+| Priority        | [High/Medium/Low]           |
+
+* Abstract (150-200 words)
+
+[Compelling 2-3 sentence hook that grabs attention]
+
+[Main content: What problem does this solve? What will attendees learn?]
+
+[Takeaway: What can attendees do after this talk?]
+
+* Description (Detailed)
+
+** Problem Statement
+
+[What problem are you solving?]
+
+** Solution Overview
+
+[Your approach]
+
+** Key Concepts
+
+- Concept 1
+- Concept 2
+- Concept 3
+
+** Live Demonstrations
+
+[What will you demo?]
+
+** Takeaways
+
+What attendees will learn:
+1. 
+2. 
+3. 
+
+* Target Audience
+
+- [ ] Beginners
+- [ ] Intermediate
+- [ ] Advanced
+- [ ] Data Engineers
+- [ ] Web Developers
+- [ ] DevOps/SRE
+- [ ] Data Scientists
+
+* Outline
+
+** For Lightning Talk (7 minutes)
+
+1. Hook (30 sec)
+2. Problem (1 min)
+3. Demo (4 min)
+4. Conclusion (30 sec)
+5. Q&A (1 min)
+
+** For Full Talk (35 minutes)
+
+1. Introduction (3 min)
+2. Background (5 min)
+3. Core Content Part 1 (8 min)
+4. Core Content Part 2 (8 min)
+5. Core Content Part 3 (8 min)
+6. Best Practices (2 min)
+7. Q&A (1 min)
+
+* Code Examples
+
+** Example 1: [Description]
+
+#+begin_src clojure
+(ns example.core
+  (:require [clojure.string :as str]))
+
+(defn example-function
+  "Description of what this does"
+  [input]
+  ;; Implementation
+  input)
+#+end_src
+
+** Example 2: [Description]
+
+#+begin_src python
+def example_function(input_data):
+    """Description of what this does"""
+    # Implementation
+    return input_data
+#+end_src
+
+* Diagrams
+
+** Architecture Overview
+
+#+begin_src mermaid :file ../../presentations/assets/diagrams/PROPOSAL-architecture.png
+graph TB
+    A[Component A] --> B[Component B]
+    B --> C[Component C]
+#+end_src
+
+#+RESULTS:
+[[file:../../presentations/assets/diagrams/PROPOSAL-architecture.png]]
+
+** Sequence Diagram
+
+#+begin_src mermaid :file ../../presentations/assets/diagrams/PROPOSAL-sequence.png
+sequenceDiagram
+    participant User
+    participant System
+    User->>System: Request
+    System-->>User: Response
+#+end_src
+
+* Technical Requirements
+
+- [ ] Projector/screen
+- [ ] Internet connection
+- [ ] Audio for video clips
+- [ ] Backup: Pre-recorded demos
+
+* Backup Plan
+
+In case of technical difficulties:
+- Pre-recorded demo videos
+- Printed code examples
+- Static diagrams
+
+* References
+
+- Reference 1
+- Reference 2
+
+* Notes and Ideas
+
+[Random thoughts, questions to address, etc.]
+
+* Review Checklist
+
+- [ ] Abstract is compelling and clear
+- [ ] Description explains problem and solution
+- [ ] Code examples are tested and working
+- [ ] Diagrams are clear and accurate
+- [ ] Outline fits time slot
+- [ ] Technical requirements listed
+- [ ] Backup plan in place
+- [ ] Spell-checked and proofread
+- [ ] Reviewed by colleague/friend
+
+* Submission
+
+** Sessionize Fields
+
+- Title: [From #+TITLE above]
+- Abstract: [From Abstract section]
+- Description: [From Description section]
+- Session Format: [Lightning/Full]
+- Session Level: [100/200/300/400]
+- Tags: #clojure #org-mode #[others]
+
+** Submitted
+
+- [ ] Uploaded to Sessionize
+- [ ] Confirmation received
+- Date: [YYYY-MM-DD]
+- Sessionize ID: [ID]
