@@ -6,10 +6,12 @@
 
 *How do you attribute code/content when the creation chain involves multiple AI agents, synthetic identities, and human oversight across distributed systems?*
 
-* The Scenario
+* The Scenario: "The Attribution Exploration Arena"
 
 #+begin_src text
-Real Human: jwalsh (Jason Walsh)
+Environment: FreeBSD 14.3-RELEASE (Uptime: ~32 days)
+Location: Isolated Shell Session
+Real Human: jwalsh (connecting from jasons-mbp-2.lan)
     ↓
 Synthetic GitHub Identity: aygp-dr (not a real person)
     ↓
