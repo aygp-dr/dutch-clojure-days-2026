@@ -1,0 +1,102 @@
+#+TITLE: Deep Dive: S-Expression Level Attribution with Jujutsu
+#+DATE: 2025-11-23
+#+AUTHOR: Jason Walsh (via Amp)
+
+* The Problem: Line-Based Blame in a Tree-Based World
+
+Standard version control systems (Git, Mercurial, and by extension Jujutsu's default view) operate on *lines of text*. This is fundamentally mismatched with Lisp/Clojure languages, where structure is defined by nesting (S-expressions), not line breaks.
+
+** The "Indentation Bankruptcy"
+When a Clojure developer wraps a block of code in a new form (e.g., wrapping a ~do~ block in a ~let~ binding), the entire block must be indented.
+- *Git Blame Result*: The new author "owns" every line because whitespace changed.
+- *Reality*: The inner logic was unchanged; only the context changed.
+
+This destroys attribution history and makes `git blame` useless for long-lived Clojure projects.
+
+* The Concept: S-Expression Level Ownership
+
+Instead of tracking "Who last touched line 10?", we ask "Who originally introduced this list node?".
+
+** Visualization
+
+Consider this transition:
+
+#+begin_src clojure
+;; Version 1 (Author: Alice)
+(defn calculate [x]
+  (* x 2))
+#+end_src
+
+#+begin_src clojure
+;; Version 2 (Author: Bob)
+(defn calculate [x]
+  (let [multiplier 2]    ;; Bob added this
+    (* x multiplier)))   ;; Alice wrote (* x ...), Bob changed 2 -> multiplier
+#+end_src
+
+In a line-based blame, Bob owns everything.
+In S-exp blame:
+- ~(defn calculate [x] ...)~ : *Alice* (Outer form)
+- ~(let [multiplier 2] ...)~ : *Bob* (Wrapper)
+- ~(* x ...)~ : *Alice* (Moved/Preserved)
+- ~multiplier~ : *Bob* (New token)
+
+* Leveraging Jujutsu (jj) for Structural Attribution
+
+Jujutsu offers specific advantages over Git that make this feasible:
+
+** 1. First-Class Conflicts
+`jj` stores conflicts in the commit object itself. A custom "S-Expression Merge Driver" could verify structural integrity. If Alice and Bob edit different parts of the same S-exp, `jj` can represent this as a *conflicted tree* rather than a conflicted text file, allowing a structural resolver to cleanly attribute changes.
+
+** 2. The Operation Log (`op_log`)
+`jj` tracks the *operations* that led to a state, not just the snapshots.
+- We can replay the `op_log` to see *intent*.
+- Did the user "reformat" (no structural change)?
+- Did the user "wrap" (structural insertion)?
+
+** 3. Revsets for Granular History
+`jj`'s functional revset language allows us to query history dynamically. We can define a revset that filters out purely whitespace/formatting changes.
+
+#+begin_src bash
+jj log -r 'diff_contains("content") ~ diff_contains("indentation")'
+#+end_src
+
+* Proposal: The `jj-sexp-blame` Tool
+
+A theoretical tool that combines `tree-sitter-clojure` with `jj`'s low-level API.
+
+** Algorithm
+
+1. **Parse**: For commit $C$, parse file $F$ into AST $T_C$.
+2. **Diff**: For parent $P$, parse $F$ into AST $T_P$.
+3. **Map**: Use a tree-diff algorithm (like GumTree) to map nodes from $T_P$ to $T_C$.
+4. **Attribute**:
+   - If Node $N$ in $T_C$ has a mapping in $T_P$, inherit attribution.
+   - If Node $N$ is unmapped, attribute to Author($C$).
+5. **Render**: Generate an Emacs overlay or HTML heatmap.
+
+** Implementation Sketch (Babashka)
+
+#+begin_src clojure
+(defn blame-sexp [file commit]
+  (let [current-ast (parse-file file)
+        parent-ast (parse-file (jj-cat file (parent-of commit)))
+        mappings (tree-diff parent-ast current-ast)]
+    (walk/postwalk
+     (fn [node]
+       (if-let [origin (get mappings node)]
+         (assoc node :author (:author origin)) ;; Inherit
+         (assoc node :author (get-commit-author commit)))) ;; New ownership
+     current-ast)))
+#+end_src
+
+* Impact on "The Attribution Problem"
+
+This solves the "Social/Professional" consideration from our research:
+- *Code Review*: Reviewers can ignore "Bob's indentation changes" and focus on "Alice's logic".
+- *Copyright*: We can mathematically prove that 90% of the *tokens* belong to Alice, even if 100% of the *lines* were touched by Bob.
+
+* Future Work
+
+- Build a `jj` CLI extension: `jj sexp blame <file>`
+- Integrate with Emacs `cider-mode` to show author tooltips on hover.
