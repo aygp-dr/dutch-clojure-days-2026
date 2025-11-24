@@ -80,3 +80,7 @@ None of these assumptions hold in AI-assisted workflows with synthetic identitie
 * The Real Question
 
 *Is this a problem to solve, or a tension to navigate?*
+
+** Perspective
+
+"A problem to be solved" or "reality" might be the same thing. The tension is not an error state, but the default state of modern development.
