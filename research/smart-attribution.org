@@ -1,0 +1,40 @@
+#+TITLE: Research: Smart Contracts for Code Attribution
+#+DATE: 2025-11-23
+#+AUTHOR: Jason Walsh (via Amp)
+
+* The Idea: Immutable Attribution Ledger
+
+If `git blame` is mutable and easily spoofed, and centralized platforms (GitHub) are proprietary silos, can we use distributed ledgers to track attribution in a way that survives "Indentation Bankruptcy"?
+
+* Tokenized S-Expressions
+
+Imagine every function in a library is an NFT (Non-Fungible Token) or a signed entry on a Merkle Log.
+- When you import a library, you are referencing a chain of custody.
+- When you refactor code, you are appending a transaction: "User X moved Function Y to new Namespace Z."
+
+** The "Code Royalty" Model
+
+If a developer writes a utility function ~fast-inverse-sqrt~ in Clojure:
+1. It is signed and registered.
+2. An AI agent ingests it into its context.
+3. The AI generates code for a User using that function.
+4. The generated code includes a micropayment or at least a *cryptographic citation* back to the original author.
+
+* Practical Application: The "Citation Graph"
+
+We don't need a blockchain; we can use a *signed git-notes* system.
+
+#+begin_src bash
+# Attaching a citation signature to a specific line range
+jj cite --from=src/core.clj:10-20 --source="github.com/weavejester/compojure@v1.6"
+#+end_src
+
+This allows us to query:
+"Show me all code in this project that was derived from Rich Hickey's original 'transducers' talk examples."
+
+* Challenges
+- *Granularity*: Do we attribute every `(+ 1 1)`? No.
+- *Threshold*: When does a "snippet" become an "invention"?
+- *Privacy*: Developers may not want their learning path public.
+
+This research explores the intersection of *software supply chain* and *intellectual property rights* in a post-StackOverflow world.

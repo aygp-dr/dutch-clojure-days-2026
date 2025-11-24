@@ -1,0 +1,45 @@
+#+TITLE: Research: Linting Attribution and Synthetic Code Detection
+#+DATE: 2025-11-23
+#+AUTHOR: Jason Walsh (via Amp)
+
+* The Problem: Silent Hallucinations
+
+As reliance on AI coding agents increases, the risk of "confident but wrong" code entering the codebase grows. Traditional linters (clj-kondo) check syntax, but they don't check *semantic intent* or *attribution integrity*.
+
+* Attribution Linting
+
+We propose a new class of linter: `clj-provenance`.
+
+** Ruleset Examples
+
+1. **The "Stale Docstring" Rule**
+   - *Trigger*: Function body changes significantly (>50% tokens) but docstring is untouched.
+   - *Reasoning*: AI often rewrites code but forgets to update docs.
+   - *Action*: Warning: "Code/Docstring divergence detected."
+
+2. **The "Ghost Import" Rule**
+   - *Trigger*: Code uses a library that isn't in `deps.edn`.
+   - *Reasoning*: Models hallucinate standard libraries or common packages.
+   - *Action*: Error: "Symbol `utils/map-v` used but `utils` not required."
+
+3. **The "Sudden Style Shift" Rule**
+   - *Trigger*: A commit introduces a drastically different indentation style or naming convention (e.g., snake_case in a kebab-case project).
+   - *Reasoning*: Indicates copy-paste from a Python-trained model or unconfigured agent.
+
+* Implementation Strategy
+
+Using `carve` and `clj-kondo` hooks to analyze diffs specifically for AI artifacts.
+
+#+begin_src clojure
+(defn check-style-consistency [commit-diff]
+  (let [project-style (analyze-project-style)
+        diff-style (analyze-diff-style commit-diff)]
+    (when (> (distance project-style diff-style) threshold)
+      (alert "Foreign style detected - likely unprompted AI generation"))))
+#+end_src
+
+* CI Integration
+
+A GitHub Action that fails the build if:
+1. A commit is flagged as AI-generated (via `.ai-bom`).
+2. BUT no human review signature is present in the commit trailer (`Reviewed-by:`).

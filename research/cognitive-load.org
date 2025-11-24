@@ -1,0 +1,46 @@
+#+TITLE: Research: Cognitive Load and "The Reviewer's Dilemma"
+#+DATE: 2025-11-23
+#+AUTHOR: Jason Walsh (via Amp)
+
+* The Shift from Writer to Editor
+
+Recent studies (2024-2025) show that while AI increases *velocity* of code production, it significantly increases the *cognitive load* of code review.
+
+* The Reviewer's Dilemma
+
+When a human writes code, they build a mental model of the logic *as they write*.
+When a human reviews AI code, they must:
+1. Reverse-engineer the intent (which may not exist).
+2. Verify the implementation against that reverse-engineered intent.
+3. Spot subtle hallucinations (the "looks right" problem).
+
+** The "Trust/Verify" Curve
+
+As AI models get better, the errors become more subtle.
+- *Low capability AI*: Generates garbage. Easy to spot.
+- *High capability AI*: Generates 99% correct code. The 1% bug is deeply buried in plausible logic.
+
+* Research Area: Review-Optimized Code Generation
+
+Can we prompt AI agents to generate code that is *easier to review*, even if it is slightly less efficient?
+
+** literate-diffs
+Instead of just generating the code, the agent generates a "Rationale Diff":
+
+#+begin_src text
+Change: Switched from `map` to `pmap`
+Rationale: Data set is expected to be >10k items; parallel processing warranted.
+Risk: Order is not guaranteed (not an issue here as results are sorted later).
+#+end_src
+
+** Semantic Highlighting
+Developing Emacs overlays that highlight:
+- *Generated Logic*: "This loop was synthesized."
+- *Human Constraints*: "This constant was pinned by the user."
+- *Uncertainty*: "The agent was only 60% confident about this regex."
+
+* Experiment
+Conduct A/B testing with Dutch Clojure Days attendees:
+- Group A reviews raw AI code.
+- Group B reviews "Rationale-Annotated" AI code.
+- Measure time-to-bug-discovery.

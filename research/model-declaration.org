@@ -1,0 +1,54 @@
+#+TITLE: Research: Model Declaration and "The AI Bill of Materials"
+#+DATE: 2025-11-23
+#+AUTHOR: Jason Walsh (via Amp)
+
+* The Need for Provenance
+
+In the last six months, the concept of "Software Supply Chain Security" has expanded to include *Generative Provenance*. It is no longer sufficient to know which *library* version was used; we must know which *model* generated the code.
+
+* Proposal: The `.ai-bom` Standard
+
+Similar to `package.json` or `deps.edn`, projects should include a machine-readable Bill of Materials for AI assistance.
+
+** Schema Definition (EDN)
+
+#+begin_src clojure
+{:version "1.0"
+ :policy {:allow-synthetic-code true
+          :require-human-review true}
+ :assistants
+ {:claude-3-5-sonnet
+  {:provider "Anthropic"
+   :capabilities [:text :code :reasoning]
+   :usage-context "Architecture design, documentation writing"}
+  :amp-v0-1763
+  {:provider "Sourcegraph"
+   :capabilities [:shell :fs :git]
+   :usage-context "Scaffolding, implementation, git operations"}}
+ :attribution-log
+ [{:id "sha-123"
+   :model :claude-3-5-sonnet
+   :prompt-hash "a1b2c3d4"
+   :files ["README.org" "docs/architecture.md"]}
+  {:id "sha-456"
+   :model :amp-v0-1763
+   :action "refactor"
+   :files ["src/core.clj"]}]}
+#+end_src
+
+* Integration with Jujutsu
+
+`jj` allows attaching arbitrary key-value pairs to commits. We can automate this:
+
+#+begin_src bash
+# Automating the declaration in the commit object
+jj commit --config user.model="claude-3.5-sonnet" \
+          --config user.prompt-hash="xyz789" \
+          -m "Refactor auth logic"
+#+end_src
+
+* Research Questions
+
+1. **Verification**: How do we cryptographically prove a specific model generated a snippet? (Watermarking?)
+2. **Drift**: Models change (e.g., "GPT-4" today is not "GPT-4" next month). How do we pin model versions?
+3. **License Contamination**: If a model trained on GPL code generates a function, does the `.ai-bom` flag it?
