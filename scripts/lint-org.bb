@@ -31,7 +31,7 @@
 
 (defn -main []
   (let [root (str/trim (:out (sh "git" "rev-parse" "--show-toplevel")))]
-    (doseq [file (fs/glob root "**/*.org")]
+    (doseq [file (fs/glob root "{**/*.org,*.org}")]
       (lint-file file))
     (println "✓ All files passed org-lint")))
 
