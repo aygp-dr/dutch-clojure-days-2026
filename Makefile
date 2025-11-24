@@ -1,7 +1,12 @@
 .PHONY: all tangle diagrams clean help
 
 # Default target
-all: tangle diagrams
+all: tangle diagrams lint
+
+# Lint Org files
+lint:
+	@echo "Linting org files..."
+	@./scripts/lint-org.bb
 
 # Tangle all Org files to source code
 tangle:

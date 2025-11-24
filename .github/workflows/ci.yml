@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install Emacs
+      uses: purcell/setup-emacs@master
+      with:
+        version: 29.1
+        
+    - name: Install Babashka
+      uses: babashka/setup-babashka@v1
+      with:
+        version: 'latest'
+        
+    - name: Lint Org files
+      run: make lint
