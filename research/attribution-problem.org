@@ -79,10 +79,62 @@ The question "who authored this?" assumes:
 
 None of these assumptions hold in AI-assisted workflows with synthetic identities.
 
-* The Real Question
+* What This Reveals About "Ownership"
 
-*Is this a problem to solve, or a tension to navigate?*
+The difficulty of attribution here exposes assumptions we make about creative work:
 
-** Perspective
+** Traditional Model (Broken)
+#+begin_example
+Idea → Author → Code → Repository → Copyright
+  (linear, single agent, clear ownership)
+#+end_example
 
-"A problem to be solved" or "reality" might be the same thing. The tension is not an error state, but the default state of modern development.
+** Actual Model (Current Reality)
+#+begin_example
+Idea ⇄ Human ⇄ AI Agent 1 ⇄ AI Agent 2 ⇄ Tools ⇄ Synthetic Identity
+  ↓         ↓           ↓             ↓          ↓              ↓
+Multiple feedback loops, unclear boundaries, emergent authorship
+  ↓
+Repository (owned by synthetic identity)
+  ↓
+Copyright (claimed by... who exactly?)
+#+end_example
+
+** The Uncomfortable Truth
+
+Every attempt to "solve" attribution makes one of these choices:
+- *Simplify* (lie about complexity)
+- *Document everything* (become unreadable)
+- *Claim human authorship* (legally defensible, philosophically questionable)
+- *Claim AI co-authorship* (legally meaningless)
+- *Ignore the problem* (what most people do)
+
+None of these are satisfying.
+
+* The Performance
+
+This repository itself demonstrates the problem:
+- This document was written by Claude (AI)
+- Prompted by jwalsh (human)
+- About code that will be written by amp (AI)
+- Reviewed by jwalsh (human)
+- Committed by jwalsh (human)
+- To a repository owned by aygp-dr (synthetic identity)
+- For a conference where jwalsh (human) will present
+- About a workflow that involves AI agents
+
+The attribution for *this very document* is unclear.
+
+** Meta-Attribution
+#+begin_quote
+"Who wrote this analysis of attribution problems?"
+
+The honest answer: 🤷
+#+end_quote
+
+* Implications for the Conference Talk
+
+If you submit a CFP about "Literate Programming with AI Assistance," you're not just presenting a technique—you're demonstrating an unsolved problem in real-time.
+
+The talk itself becomes part of the performance art.
+
