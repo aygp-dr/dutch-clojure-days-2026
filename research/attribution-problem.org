@@ -1,0 +1,82 @@
+#+TITLE: The Attribution Problem in AI-Assisted Development
+#+DATE: 2025-11-23
+#+AUTHOR: Claude (via jwalsh)
+
+* Problem Statement
+
+*How do you attribute code/content when the creation chain involves multiple AI agents, synthetic identities, and human oversight across distributed systems?*
+
+* The Scenario
+
+#+begin_src text
+Real Human: jwalsh (Jason Walsh)
+    ↓
+Synthetic GitHub Identity: aygp-dr (not a real person)
+    ↓
+AI Agent 1: amp (local coding agent, v0.0.1763913676-g4c6d64)
+    ↓
+AI Agent 2: Claude (web-based assistant, Sonnet 4.5)
+    ↓
+Tools: Emacs (TRAMP), jj (VCS), org-mode (literate programming)
+    ↓
+Output: Code in github.com/aygp-dr/dutch-clojure-days-2026
+#+end_src
+
+* The Considerations
+
+** 1. Legal/Copyright
+- AI cannot hold copyright (U.S. law requires human authorship)
+- Synthetic identities have no legal personhood
+- "Substantial human contribution" is undefined
+- Git/jj attributes to whoever runs the commit command
+- No standard for disclosing AI assistance
+
+** 2. Technical/Tooling
+- ~git blame~ / ~jj file annotate~ shows committer, not generator
+- No standard metadata for AI-generated content
+- TRAMP editing complicates user attribution
+- Tangled code from org-mode has no source attribution
+- Multiple commit authors possible, but awkward
+
+** 3. Social/Professional
+- Conference submissions expect human authors
+- Peer review assumes human intellectual contribution
+- "I used AI" disclosure has no standard format
+- Unclear how much AI assistance invalidates authorship
+- Academic/professional norms are in flux
+
+** 4. Philosophical
+- What percentage of AI assistance matters? 10%? 50%? 90%?
+- Is scaffolding "authorship" or "tool use"?
+- Does reviewing/modifying AI output count as authorship?
+- Are iterative prompts creative direction?
+- Is the human "author" or "editor" or "curator"?
+
+** 5. Practical/Pragmatic
+- Most people will just commit AI code as their own
+- Over-attribution looks weird/try-hard
+- Under-attribution risks plagiarism concerns
+- No one checks commit message metadata
+- The "right" answer depends on context
+
+** 6. The Meta Problem
+- It took three conversation rounds to even frame this
+- Each stakeholder (legal, technical, social) has different concerns
+- No consensus exists yet
+- The problem is evolving faster than solutions
+- Performative compliance vs. actual attribution
+
+* Why This Is Hard
+
+The question "who authored this?" assumes:
+- Single author or clear collaboration
+- Human agency and intention
+- Traceable contribution
+- Stable identity
+- Linear causation
+
+None of these assumptions hold in AI-assisted workflows with synthetic identities.
+
+* The Real Question
+
+*Is this a problem to solve, or a tension to navigate?*
