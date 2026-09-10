@@ -93,6 +93,36 @@ gh pr create --title "Review: Proposal 1"
 jj new -m "Address review comments"
 #+end_src
 
+** Clojure project (=code/=)
+
+=code/= is a Clojure project that follows the aygp-dr Clojure standard.
+=code/deps.edn= is the manifest and =code/bb.edn= holds the tasks. Run them
+from =code/=, or run =make check= from the repo root.
+
+| Task                    | What it does                               |
+|-------------------------+--------------------------------------------|
+| =bb test=               | JVM test suite (=clojure -M:test=)         |
+| =bb test:bb=            | the same tests under babashka              |
+| =bb lint=               | clj-kondo (fails on errors)                |
+| =bb fmt= / =bb fmt:fix= | cljfmt check / fix                         |
+| =bb check=              | lint + fmt + test + test:bb (CI runs this) |
+| =bb org:lint=           | org-lint every .org file (needs Emacs)     |
+| =bb org:tangle=         | tangle every .org file (needs Emacs)       |
+| =bb org:diagrams=       | render mermaid blocks (needs Emacs)        |
+
+=bb lint= and =bb fmt= also cover =scripts/*.bb=.
+
+The Clojure blocks in =cfp/templates/proposal-template.org= tangle to
+=code/examples/PROPOSAL_NAME.clj=. The org block is the source of truth, so
+edit it there and re-tangle. Tangled file names don't follow the ns-to-path
+convention, so =dcd.examples= loads each one. List a new proposal's file in
+=dcd.examples/tangled=; a test fails until you do.
+
+Each example fn has an =s/fdef= right after its =defn= (see the
+[[https://clojure.org/guides/spec][clojure.spec guide]]).
+=code/test/example/specs_test.clj= runs =stest/check= over them. The unit
+tests run with instrumentation on, and =clj -M:dev= instruments at the REPL.
+
 * Tasks [0/15]
 
 ** CFP Development [0/5]

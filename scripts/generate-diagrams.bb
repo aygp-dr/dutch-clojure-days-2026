@@ -24,11 +24,11 @@
   (let [root (str/trim (:out (sh "git" "rev-parse" "--show-toplevel")))]
     (println "Generating Mermaid diagrams from" root "...")
     (fs/create-dirs (fs/path root "presentations/assets/diagrams"))
-    
+
     (doseq [file (fs/glob root "**/*.org")]
       (when (has-mermaid? file)
         (generate-diagrams file)))
-    
+
     (println "✓ Diagram generation complete")))
 
 (when (= *file* (System/getProperty "babashka.file"))

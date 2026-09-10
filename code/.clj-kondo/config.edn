@@ -1,0 +1,13 @@
+{:linters {:unused-namespace    {:level :warning}
+           :unused-referred-var {:level :warning}
+           :unused-binding      {:level :warning}
+           :redundant-do        {:level :warning}
+           :missing-docstring   {:level :off}}
+ ;; Files whose path can't follow their ns name: the org template tangles
+ ;; example.core to examples/PROPOSAL_NAME.clj, and ../scripts/*.bb are
+ ;; standalone bb scripts.
+ :config-in-ns {example.core      {:linters {:namespace-name-mismatch {:level :off}}}
+                generate-diagrams {:linters {:namespace-name-mismatch {:level :off}}}
+                lint-org          {:linters {:namespace-name-mismatch {:level :off}}}
+                tangle-all        {:linters {:namespace-name-mismatch {:level :off}}}}
+ :output {:exclude-files ["^resources/" "^node_modules/" "^target/"]}}
