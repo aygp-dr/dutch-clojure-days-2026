@@ -1,7 +1,11 @@
-.PHONY: all tangle diagrams clean help
+.PHONY: all tangle diagrams check clean help
 
 # Default target
 all: tangle diagrams lint
+
+# Clojure project in code/: lint + fmt + test on the JVM and bb (what CI runs)
+check:
+	@cd code && bb check
 
 # Lint Org files
 lint:
