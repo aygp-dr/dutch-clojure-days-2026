@@ -25,7 +25,7 @@
       (do
         (println "FAILED")
         ;; Emacs output is often mixed, but 'princ' goes to stdout in batch mode usually
-        (println out) 
+        (println out)
         (println err)
         (System/exit 1)))))
 
